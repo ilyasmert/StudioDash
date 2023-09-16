@@ -1,0 +1,43 @@
+<% layout('layouts/boilerplate') %>
+    <div id="cluster-map"></div>
+    <h1>All Studios</h1>
+    <div>
+        <a href="/studios/new">Add Studio</a>
+    </div>
+    <% for (let studio of studios) {%>
+        <div class="card mb-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <% if (studio.images.length) {%>
+                        <img crossorigin="anonymous" class="img-fluid" alt="" src="<%= studio.images[0].url %>">
+                        <% } else {%>
+                            <img crossorigin="anonymous" class="img-fluid" alt="" src="">
+                            <% } %>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= studio.title %>
+                        </h5>
+                        <p class="card-text">
+                            <%= studio.description %>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                <%= studio.location %>
+                            </small>
+                        </p>
+                        <a class="btn btn-primary" href="/studios/<%= studio._id %>">View <%= studio.title
+                                %></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+
+            <script>
+                const mapToken = '<%- process.env.MAPBOX_TOKEN %>';
+                const studios = { features: <%- JSON.stringify(studios) %>};
+            </script>
+
+            <script src="/javascripts/clusterMap.js"></script>
