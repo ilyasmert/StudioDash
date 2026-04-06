@@ -12,7 +12,7 @@
                 <a class="nav-link" href="/studios/new">New Studio</a>
             </div>
             <div class="navbar-nav ml-auto">
-                <% if (!locals.currentUser) {%>
+                <% if (!currentUser) {%>
                     <a class="nav-link" href="/login">Login</a>
                     <a class="nav-link" href="/register">Sign Up</a>
                     <% } else {%>
