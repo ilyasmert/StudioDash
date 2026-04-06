@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const app = express();
+app.set('trust proxy', 1);
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
@@ -61,7 +62,7 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        //secure: true,
+        secure: process.env.NODE_ENV === 'production',
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -142,6 +143,9 @@ app.all('*', (req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
+    if (res.headersSent) {
+        return next(err);
+    }
     const { statusCode = 500 } = err;
     if (!err.message) err.message = 'something went wrong...';
     res.status(statusCode).render('error', { err });
