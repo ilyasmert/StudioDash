@@ -28,7 +28,10 @@ const userRoutes = require('./routes/users.js');
 main().catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(dbUrl, {
+        ssl: true,
+        tlsAllowInvalidCertificates: false,
+    });
 }
 
 app.engine('ejs', ejsMate);
