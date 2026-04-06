@@ -1,18 +1,19 @@
 <% layout('layouts/boilerplate') %>
     <link rel="stylesheet" href="/stylesheets/stars.css">
-    <link crossorigin="anonymous" rel="stylesheet" href="/stylesheets/show.css">
+    <link rel="stylesheet" href="/stylesheets/show.css">
 
     <div class="row">
-        <div class="col-6 p-3">
-            <div id="studioCarousel" class="carousel slide" data-ride="carousel">
+        <div class="col-lg-6 p-3">
+            <div id="studioCarousel" class="carousel slide mb-3" data-ride="carousel">
                 <div class="carousel-inner">
-                    <% studio.images.forEach((image, i)=> { %>
+                    <% studio.images.forEach((image, i) => { %>
                         <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
-                            <img crossorigin="anonymous" src="<%= image.url %>" class="card-img-top d-block w-100 object-fit-cover border rounded" alt="">
+                            <img crossorigin="anonymous" src="<%= image.url %>"
+                                class="studio-carousel-img" alt="<%= studio.title %>">
                         </div>
-                        <% }) %>
+                    <% }) %>
                 </div>
-                <% if (studio.images.length> 1) {%>
+                <% if (studio.images.length > 1) { %>
                     <a class="carousel-control-prev" href="#studioCarousel" role="button" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
@@ -21,103 +22,101 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
-                    <% } %>
+                <% } %>
             </div>
-            <div class="card">
+
+            <div class="card studio-card">
                 <div class="card-body">
-                    <h5 class="card-title">
-                        <%= studio.title %>
-                    </h5>
-                    <p class="card-text">
-                        <%= studio.description %>
-                    </p>
+                    <h5 class="card-title"><%= studio.title %></h5>
+                    <p class="card-text"><%= studio.description %></p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item text-muted">
+                    <li class="list-group-item location-row">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                        </svg>
                         <%= studio.location %>
                     </li>
-                    <li class="list-group-item">
-                        Submitted by <%= studio.author.username %>
+                    <li class="list-group-item" style="display:flex; align-items:center; justify-content:space-between;">
+                        <span style="color:var(--sd-muted); font-size:0.875rem;">
+                            By <strong style="color:var(--sd-primary);"><%= studio.author.username %></strong>
+                        </span>
+                        <span class="price-badge">$<%= studio.price %>/hr</span>
                     </li>
-                    <li class="list-group-item">$<%= studio.price %>/hour</li>
                 </ul>
-                <% if (currentUser && studio.author.equals(currentUser)) {%>
-                    <div class="card-body">
-                        <a href="/studios/<%= studio._id %>/edit" class="card-link btn btn-info">Edit
-                            Studio</a>
+
+                <% if (currentUser && studio.author.equals(currentUser)) { %>
+                    <div class="studio-actions">
+                        <a href="/studios/<%= studio._id %>/edit" class="btn btn-info btn-sm">Edit Studio</a>
                         <form class="d-inline" action="/studios/<%= studio._id %>?_method=DELETE" method="POST">
-                            <button class="btn btn-danger">Delete Studio</button>
+                            <button class="btn btn-danger btn-sm">Delete Studio</button>
                         </form>
                     </div>
-                    <% } %>
-                        <div class="card-footer text-muted">
-                            2 days ago
-                        </div>
+                <% } %>
+
+                <div class="card-footer">
+                    Listed on <%= (studio.createdAt || studio._id.getTimestamp()).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                </div>
             </div>
         </div>
 
-        <div class="col-6 p-3">
-            <div id="map"></div>
-            <% if (currentUser) {%>
-                <h2 class="mt-3">Leave a Review</h2>
-                <form action="/studios/<%= studio._id %>/reviews" method="POST" class="mb-3 validated-form"
-                    novalidate>
-                    <!-- <div class="mt-3 mb-3">
-                        <label class="form-label" for="rating">Rating</label>
-                        <input class="form-range" type="range" min="1" max="5" name="review[rating]" id="rating">
-                    </div> -->
-                    <div class="mb-3">
-                        <fieldset class="starability-checkmark">
-                            <legend>Rate</legend>
-                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1"
-                                checked aria-label="No rating." />
-                            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                            <label for="first-rate1" title="Terrible">1 star</label>
-                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                            <label for="first-rate2" title="Not good">2 stars</label>
-                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                            <label for="first-rate3" title="Average">3 stars</label>
-                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                            <label for="first-rate4" title="Very good">4 stars</label>
-                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                            <label for="first-rate5" title="Amazing">5 stars</label>
-                        </fieldset>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="body">Review</label>
-                        <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"
-                            required></textarea>
-                        <div class="valid-feedback">
-                            Looks Good!
+        <div class="col-lg-6 p-3">
+            <div id="map" class="mb-3"></div>
+
+            <% if (currentUser) { %>
+                <div class="review-form-card card">
+                    <h6 class="review-section-title mb-3">Leave a Review</h6>
+                    <form action="/studios/<%= studio._id %>/reviews" method="POST" class="validated-form" novalidate>
+                        <div class="mb-3">
+                            <fieldset class="starability-checkmark">
+                                <legend>Rate</legend>
+                                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
                         </div>
-                    </div>
-                    <button class="btn btn-success">Submit</button>
-                </form>
-                <% } %>
-                    <% for (let review of studio.reviews) {%>
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <%= review.author.username %>
-                                </h5>
-                                <p class="starability-result" data-rating="<%= review.rating %>">
-                                    Rated: <%= review.rating %> stars
-                                </p>
-                                <!-- <h6 class="card-subtitle mb-2 text-muted">
-                                    <%= review.author.username %>
-                                </h6> -->
-                                <p class="card-text">
-                                    Review: <%= review.body %>
-                                </p>
-                                <% if (currentUser && review.author.equals(currentUser)) {%>
-                                    <form action="/studios/<%= studio._id %>/reviews/<%= review._id %>?_method=DELETE"
-                                        method="POST">
-                                        <button class="btn btn-sm btn-danger">Delete</button>
-                                    </form>
-                                    <% } %>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="body" style="font-size:0.875rem; font-weight:500;">Review</label>
+                            <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+                            <div class="valid-feedback">Looks Good!</div>
                         </div>
-                        <% } %>
+                        <button class="btn btn-success btn-sm">Submit Review</button>
+                    </form>
+                </div>
+            <% } %>
+
+            <% if (studio.reviews.length > 0) { %>
+                <h6 class="review-section-title">
+                    <%= studio.reviews.length %> Review<%= studio.reviews.length !== 1 ? 's' : '' %>
+                </h6>
+            <% } %>
+
+            <% for (let review of studio.reviews) { %>
+                <div class="card review-card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <span class="reviewer-name"><%= review.author.username %></span>
+                            <% if (currentUser && review.author.equals(currentUser)) { %>
+                                <form action="/studios/<%= studio._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                                    <button class="btn btn-sm btn-danger" style="padding: 0.25rem 0.6rem; font-size:0.75rem;">Delete</button>
+                                </form>
+                            <% } %>
+                        </div>
+                        <p class="starability-result" data-rating="<%= review.rating %>">
+                            Rated: <%= review.rating %> stars
+                        </p>
+                        <p class="review-body"><%= review.body %></p>
+                    </div>
+                </div>
+            <% } %>
         </div>
     </div>
 
@@ -125,5 +124,4 @@
         const mapToken = '<%- process.env.MAPBOX_TOKEN %>';
         const studio = <%- JSON.stringify(studio) %>;
     </script>
-
     <script src="/javascripts/showPageMap.js"></script>

@@ -1,9 +1,124 @@
+:root {
+    --sd-bg: #f8fafc;
+    --sd-surface: #ffffff;
+    --sd-primary: #1e293b;
+    --sd-accent: #6366f1;
+    --sd-accent-hover: #4f46e5;
+    --sd-muted: #64748b;
+    --sd-border: #e2e8f0;
+    --sd-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --sd-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
+    --sd-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
+    --sd-radius: 12px;
+    --sd-radius-sm: 8px;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--sd-bg);
+    color: var(--sd-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
 #cluster-map {
     width: 100%;
     height: 500px;
+    border-radius: var(--sd-radius);
+    overflow: hidden;
+    box-shadow: var(--sd-shadow);
 }
 
 #map {
     width: 100%;
     height: 300px;
+    border-radius: var(--sd-radius);
+    overflow: hidden;
+    box-shadow: var(--sd-shadow-sm);
+}
+
+.card {
+    border: none !important;
+    border-radius: var(--sd-radius) !important;
+    box-shadow: var(--sd-shadow);
+    background-color: var(--sd-surface);
+}
+
+.card-footer {
+    background-color: transparent;
+    border-top: 1px solid var(--sd-border);
+    font-size: 0.8rem;
+    color: var(--sd-muted);
+}
+
+.card-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--sd-border);
+}
+
+.btn {
+    font-weight: 500;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    padding: 0.5rem 1.1rem;
+    transition: all 0.15s ease;
+}
+
+.btn-primary {
+    background-color: var(--sd-accent);
+    border-color: var(--sd-accent);
+}
+
+.btn-primary:hover {
+    background-color: var(--sd-accent-hover);
+    border-color: var(--sd-accent-hover);
+}
+
+.btn-info {
+    background-color: #0ea5e9;
+    border-color: #0ea5e9;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #0284c7;
+    border-color: #0284c7;
+    color: white;
+}
+
+.btn-success {
+    background-color: #10b981;
+    border-color: #10b981;
+}
+
+.btn-success:hover {
+    background-color: #059669;
+    border-color: #059669;
+}
+
+.btn-danger {
+    background-color: #ef4444;
+    border-color: #ef4444;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+    border-color: #dc2626;
+}
+
+.alert {
+    border: none;
+    border-radius: var(--sd-radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.form-control {
+    border-radius: var(--sd-radius-sm);
+    border-color: var(--sd-border);
+    font-size: 0.9rem;
+}
+
+.form-control:focus {
+    border-color: var(--sd-accent);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }

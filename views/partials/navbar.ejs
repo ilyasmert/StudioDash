@@ -1,4 +1,38 @@
-<nav class="navbar sticky-top position-fixed w-100 navbar-expand-lg navbar-dark bg-dark">
+<style>
+    .sd-navbar {
+        background: #0f172a;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding: 0.6rem 0;
+    }
+    .sd-navbar .navbar-brand {
+        font-weight: 700;
+        font-size: 1.15rem;
+        letter-spacing: -0.02em;
+        color: #f1f5f9 !important;
+    }
+    .sd-navbar .nav-link {
+        color: #94a3b8 !important;
+        font-size: 0.875rem;
+        font-weight: 500;
+        padding: 0.4rem 0.75rem !important;
+        border-radius: 6px;
+        transition: color 0.15s, background 0.15s;
+    }
+    .sd-navbar .nav-link:hover,
+    .sd-navbar .nav-link.active {
+        color: #f1f5f9 !important;
+        background: rgba(255,255,255,0.06);
+    }
+    .sd-navbar .nav-auth .nav-link {
+        color: #6366f1 !important;
+    }
+    .sd-navbar .nav-auth .nav-link:hover {
+        color: #818cf8 !important;
+        background: rgba(99,102,241,0.1);
+    }
+</style>
+
+<nav class="navbar sticky-top position-fixed w-100 navbar-expand-lg sd-navbar">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">StudioDash</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -7,17 +41,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" href="/">Home</a>
+                <a class="nav-link" href="/">Home</a>
                 <a class="nav-link" href="/studios">Studios</a>
                 <a class="nav-link" href="/studios/new">New Studio</a>
             </div>
-            <div class="navbar-nav ml-auto">
-                <% if (!currentUser) {%>
+            <div class="navbar-nav ml-auto nav-auth">
+                <% if (!currentUser) { %>
                     <a class="nav-link" href="/login">Login</a>
                     <a class="nav-link" href="/register">Sign Up</a>
-                    <% } else {%>
-                        <a class="nav-link" href="/logout">Logout</a>
-                        <% } %>
+                <% } else { %>
+                    <a class="nav-link" href="/logout">Logout</a>
+                <% } %>
             </div>
         </div>
     </div>

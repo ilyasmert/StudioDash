@@ -1,5 +1,106 @@
-.card-img-top {
+/* Show page image carousel */
+.studio-carousel-img {
     width: 100%;
-    height: 25vw;
-    object-fit: scale;
+    height: 28vw;
+    min-height: 220px;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: var(--sd-radius) var(--sd-radius) 0 0;
+    display: block;
+}
+
+/* Studio detail card */
+.studio-card .card-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--sd-primary);
+    margin-bottom: 0.4rem;
+}
+
+.studio-card .card-text {
+    color: var(--sd-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.studio-card .list-group-item {
+    border: none;
+    border-top: 1px solid var(--sd-border);
+    padding: 0.7rem 1.25rem;
+    font-size: 0.875rem;
+    color: var(--sd-primary);
+}
+
+.studio-card .list-group-item:first-child {
+    border-top: 1px solid var(--sd-border);
+}
+
+/* Price badge */
+.price-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 20px;
+    letter-spacing: 0.01em;
+}
+
+/* Location icon row */
+.location-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--sd-muted);
+    font-size: 0.875rem;
+}
+
+/* Review section */
+.review-section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--sd-primary);
+    margin-bottom: 0.75rem;
+}
+
+.review-card {
+    border: none !important;
+    border-radius: var(--sd-radius) !important;
+    box-shadow: var(--sd-shadow-sm) !important;
+    transition: box-shadow 0.2s ease;
+}
+
+.review-card:hover {
+    box-shadow: var(--sd-shadow) !important;
+}
+
+.review-card .reviewer-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--sd-primary);
+}
+
+.review-card .review-body {
+    font-size: 0.875rem;
+    color: var(--sd-muted);
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+}
+
+/* Review form */
+.review-form-card {
+    border: none !important;
+    border-radius: var(--sd-radius) !important;
+    box-shadow: var(--sd-shadow) !important;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Author actions */
+.studio-actions {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--sd-border);
 }
